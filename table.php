@@ -66,6 +66,28 @@ $users = [
       'home' => 'drawing'
     ]
   ],
+  (object)[
+    'id' => 4,
+    'name' => 'nancy',
+    "gender" => (object)[
+      'gender' => 'f'
+    ],
+    'hobbies' => [
+      'running',
+    ],
+    'activities' => [
+      "school" => 'painting',
+      'home' => 'drawing'
+    ],
+    'phone' => [
+      '01123391432',
+    ],
+    'email' => [
+      '123@yahoo.com',
+    ],
+    
+  ],
+
 
 ];
 
@@ -84,27 +106,47 @@ $users = [
 </head>
 
 <body>
-  <table class="table table-striped">
+  <?php
+  if (count($users)>0) {
+    ?>
+    <table class="table table-striped">
+
     <thead>
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col">name</th>
-        <th scope="col">gender</th>
-        <th scope="col">hobbies</th>
-        <th scope="col">activities</th>
-      </tr>
+      <?php foreach($users[count($users)-1]as $property=>$value){?>
+        <th><?=$property?></th>
+        <?php }?>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row"></th>
-        <td><?php echo $user->id;?></td>
-        <td><?php echo $users['name']?></td>
-        <td><?php echo $users['gender->gender']?></td>
-        <td><?php echo $users['hobbies']?></td>
-        <td><?php echo $users['activities']?></td>
-      </tr>
-        </tbody>
+      <?php foreach($users as $user){?>
+        <tr>
+          <?php foreach($user as $property=>$value){?>
+            <td> <?php if (gettype($value)=='array'||gettype($value)=='object') {
+              
+              foreach($value as $m =>$l){
+                if ($property=='gender'){
+                  if($l=='m'){
+                    $l='male';
+
+                  }elseif($l=='f'){
+                    $l='female';
+                  }
+                } 
+                echo $l. '.';       
+               }
+            } else{
+              echo $value;
+            }
+           ?>
+            </td> 
+         <?php }?>
+        </tr>
+      <?php }?>  
+    </tbody>
   </table>
+   <?php
+   }
+  ?>
+  
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -114,10 +156,6 @@ $users = [
 
 </html>
 
-<?php
 
-  foreach ($users as $index =>$id) {
-    $message .= $users->id . ' , ';
-  }
-  $message .= "<br>";
+
 
